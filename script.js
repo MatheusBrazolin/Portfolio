@@ -1,121 +1,89 @@
-document.addEventListener("DOMContentLoaded", () => {
-  initMenu();
-  initLerMais();
-  initToast();
-  initTema();
-});
+(function () {
+  'use strict';
 
-/* ======================
-   MENU DE NAVEGAÇÃO
-====================== */
-function initMenu() {
-  const linksMenu = document.querySelectorAll(".menu-link");
-  const secoes = document.querySelectorAll(".secao");
+  // ─── Theme ───────────────────────────────────────────────────────────────────
+  const html      = document.documentElement;
+  const themeBtn  = document.getElementById('toggle-tema');
+  const themeIcon = document.getElementById('tema-icon');
 
-  linksMenu.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
+  let theme = localStorage.getItem('tema') || 'dark';
+  applyTheme(theme);
 
-      ativarItem(linksMenu, link, "ativo");
-      mostrarSecao(secoes, link.dataset.section);
-    });
-  });
-}
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    themeIcon.textContent = t === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('tema', t);
+    theme = t;
+  }
 
-function ativarItem(lista, itemAtivo, classe) {
-  lista.forEach(item => item.classList.remove(classe));
-  itemAtivo.classList.add(classe);
-}
+  themeBtn.addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' : 'dark'));
 
-function mostrarSecao(secoes, id) {
-  secoes.forEach(secao => secao.classList.remove("ativa"));
-  document.getElementById(id)?.classList.add("ativa");
-}
+  // ─── Active nav link on scroll ────────────────────────────────────────────────
+  const navLinks = document.querySelectorAll('.nav-link');
 
-/* ======================
-   LER MAIS / LER MENOS
-====================== */
-function initLerMais() {
-  const botoes = document.querySelectorAll(".btn-ler-mais");
-
-  botoes.forEach(botao => {
-    botao.addEventListener("click", () => {
-      const card = botao.closest(".projeto-card");
-      const descricao = card.querySelector(".descricao-projeto");
-      const estaAberto = descricao.classList.contains("ativa");
-
-      fecharDescricoes();
-      resetarBotoes(botoes);
-
-      if (!estaAberto) {
-        descricao.classList.add("ativa");
-        botao.textContent = "Ler menos";
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
       }
     });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+
+  // ─── Scroll reveal ────────────────────────────────────────────────────────────
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ─── Project expand toggle ────────────────────────────────────────────────────
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    const panel   = document.getElementById(btn.dataset.target);
+    const chevron = btn.querySelector('.toggle-chevron');
+    const label   = btn.querySelector('.toggle-label');
+    if (!panel) return;
+
+    btn.addEventListener('click', () => {
+      const open = panel.classList.toggle('open');
+      chevron.classList.toggle('open', open);
+      label.textContent = open ? 'Ocultar detalhes' : 'Ver detalhes';
+      btn.setAttribute('aria-expanded', String(open));
+    });
   });
-}
 
-function fecharDescricoes() {
-  document.querySelectorAll(".descricao-projeto")
-    .forEach(desc => desc.classList.remove("ativa"));
-}
-
-function resetarBotoes(botoes) {
-  botoes.forEach(btn => btn.textContent = "Ler mais");
-}
-
-/* ======================
-   TOAST DE BOAS-VINDAS
-====================== */
-function initToast() {
-  const toast = document.getElementById("mensagem");
-  if (!toast) return;
-
-  const hoje = new Date().toLocaleDateString("pt-BR");
-  const ultimaVisita = localStorage.getItem("ultimaVisita");
-
-  toast.textContent = gerarMensagem(ultimaVisita, hoje);
-  localStorage.setItem("ultimaVisita", hoje);
-
-  mostrarToast(toast);
-}
-
-function gerarMensagem(ultima, hoje) {
-  if (!ultima) return "👋 Bem-vindo! Obrigado por visitar meu portfólio.";
-  if (ultima === hoje) return "👋 Que bom te ver novamente hoje!";
-  return "👋 Bem-vindo de volta! Fique à vontade.";
-}
-
-function mostrarToast(toast) {
-  setTimeout(() => toast.classList.add("ativo"), 300);
-  setTimeout(() => toast.classList.add("saindo"), 3500);
-  setTimeout(() => toast.remove(), 4200);
-}
-
-/* ======================
-   TEMA DARK / LIGHT
-====================== */
-function initTema() {
-  const botaoTema = document.getElementById("toggle-tema");
-  if (!botaoTema) return;
-
-  const temaSalvo = localStorage.getItem("tema");
-  aplicarTema(temaSalvo, botaoTema);
-
-  botaoTema.addEventListener("click", () => {
-    const darkAtivo = document.body.classList.toggle("dark");
-    salvarTema(darkAtivo, botaoTema);
-  });
-}
-
-function aplicarTema(tema, botao) {
-  if (tema === "dark") {
-    document.body.classList.add("dark");
-    botao.textContent = "☀️";
+  // ─── Toast ───────────────────────────────────────────────────────────────────
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4200);
   }
-}
 
-function salvarTema(darkAtivo, botao) {
-  localStorage.setItem("tema", darkAtivo ? "dark" : "light");
-  botao.textContent = darkAtivo ? "☀️" : "🌙";
-}
+  function initToast() {
+    const hoje   = new Date().toLocaleDateString('pt-BR');
+    const ultima = localStorage.getItem('ultimaVisita');
+    localStorage.setItem('ultimaVisita', hoje);
+
+    if (!ultima)           showToast('👋 Bem-vindo ao meu portfólio!');
+    else if (ultima !== hoje) showToast('🙌 Bem-vindo de volta!');
+  }
+
+  setTimeout(initToast, 900);
+
+  // ─── Smooth anchor scroll ─────────────────────────────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+})();
