@@ -1,10 +1,16 @@
+# Portfólio — Matheus Brazolin
 
-# Portfólio em JavaScript 
+Site de portfólio pessoal desenvolvido com HTML, CSS e JavaScript puro.
 
-Este é um projeto simples de portfólio/currículo feito com:
-- HTML 
-- CSS 
-- JavaScript 
+**Acesse:** https://matheus-brazolin-portfolio.vercel.app
 
-## Objetivo
-Mostrar um pouco sobre o Matheus e para que possamos criar novas canecões 
+## O que tem
+
+- Apresentação e bio profissional
+- Seção de projetos com detalhes expansíveis
+- Tema claro/escuro
+- Layout responsivo
+
+## Stack
+
+HTML · CSS · JavaScript
