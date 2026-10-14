@@ -1,24 +1,25 @@
 (function () {
   'use strict';
 
-  // ─── Theme ───────────────────────────────────────────────────────────────────
-  const html      = document.documentElement;
-  const themeBtn  = document.getElementById('toggle-tema');
-  const themeIcon = document.getElementById('tema-icon');
+  const html = document.documentElement;
+  html.classList.add('js');
 
-  let theme = localStorage.getItem('tema') || 'dark';
-  applyTheme(theme);
+  // ─── Tema (o valor inicial é aplicado no <head> para não piscar) ─────────────
+  const themeBtn = document.getElementById('toggle-tema');
+  const themeColor = document.querySelector('meta[name="theme-color"]');
 
-  function applyTheme(t) {
+  function applyTheme(t, persist) {
     html.setAttribute('data-theme', t);
-    themeIcon.textContent = t === 'dark' ? '🌙' : '☀️';
-    localStorage.setItem('tema', t);
-    theme = t;
+    if (themeColor) themeColor.setAttribute('content', t === 'dark' ? '#0d0d14' : '#f7f8fb');
+    if (persist) { try { localStorage.setItem('tema', t); } catch (e) {} }
   }
 
-  themeBtn.addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' : 'dark'));
+  applyTheme(html.getAttribute('data-theme') || 'dark', false);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+  });
 
-  // ─── Mobile nav toggle (hambúrguer) ────────────────────────────────────────────
+  // ─── Menu mobile ──────────────────────────────────────────────────────────────
   const navToggle = document.getElementById('nav-toggle');
   const navPanel  = document.getElementById('nav-links');
 
@@ -30,32 +31,25 @@
 
   navToggle.addEventListener('click', () => setNavOpen(!navPanel.classList.contains('open')));
   navPanel.addEventListener('click', e => { if (e.target.closest('.nav-link')) setNavOpen(false); });
-
   document.addEventListener('click', e => {
-    if (navPanel.classList.contains('open') && !navPanel.contains(e.target) && !navToggle.contains(e.target)) {
-      setNavOpen(false);
-    }
+    if (navPanel.classList.contains('open') && !navPanel.contains(e.target) && !navToggle.contains(e.target)) setNavOpen(false);
   });
-
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && navPanel.classList.contains('open')) setNavOpen(false);
+    if (e.key === 'Escape' && navPanel.classList.contains('open')) { setNavOpen(false); navToggle.focus(); }
   });
 
-  // ─── Active nav link on scroll ────────────────────────────────────────────────
+  // ─── Link ativo no menu conforme a rolagem ────────────────────────────────────
   const navLinks = document.querySelectorAll('.nav-link');
-
   const sectionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
+        navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === entry.target.id));
       }
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
-
   document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
 
-  // ─── Scroll reveal ────────────────────────────────────────────────────────────
+  // ─── Animação de entrada (o hero não anima: aparece na hora) ──────────────────
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -64,49 +58,26 @@
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // ─── Project expand toggle ────────────────────────────────────────────────────
-  document.querySelectorAll('.toggle-btn').forEach(btn => {
-    const panel   = document.getElementById(btn.dataset.target);
-    const chevron = btn.querySelector('.toggle-chevron');
-    const label   = btn.querySelector('.toggle-label');
-    if (!panel) return;
-
-    btn.addEventListener('click', () => {
-      const open = panel.classList.toggle('open');
-      chevron.classList.toggle('open', open);
-      label.textContent = open ? 'Ocultar detalhes' : 'Ver detalhes';
-      btn.setAttribute('aria-expanded', String(open));
-    });
-  });
-
-  // ─── Toast ───────────────────────────────────────────────────────────────────
+  // ─── Copiar e-mail ────────────────────────────────────────────────────────────
+  const toast = document.getElementById('toast');
+  let toastTimer;
   function showToast(msg) {
-    const toast = document.getElementById('toast');
     toast.textContent = msg;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4200);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
   }
 
-  function initToast() {
-    const hoje   = new Date().toLocaleDateString('pt-BR');
-    const ultima = localStorage.getItem('ultimaVisita');
-    localStorage.setItem('ultimaVisita', hoje);
-
-    if (!ultima)           showToast('👋 Bem-vindo ao meu portfólio!');
-    else if (ultima !== hoje) showToast('🙌 Bem-vindo de volta!');
-  }
-
-  setTimeout(initToast, 900);
-
-  // ─── Smooth anchor scroll ─────────────────────────────────────────────────────
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-    });
+  const copyBtn = document.getElementById('copy-email');
+  copyBtn.addEventListener('click', async () => {
+    const email = copyBtn.dataset.email;
+    try {
+      await navigator.clipboard.writeText(email);
+      showToast('E-mail copiado');
+    } catch (e) {
+      showToast(email);
+    }
   });
-
 })();
