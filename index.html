@@ -146,8 +146,8 @@
         <ul class="highlights load-in" style="--d:7" aria-label="Destaques">
           <li><span class="hl-n" data-count="4">4</span><span class="hl-l">projetos próprios no ar, com demo e código aberto</span></li>
           <li><span class="hl-n" data-count="148">148</span><span class="hl-l">arquivos de teste somando os quatro projetos</span></li>
-          <li><span class="hl-n" data-count="121">121</span><span class="hl-l">testes unitários no leitor de dados em Rust</span></li>
-          <li><span class="hl-n" data-count="6">6</span><span class="hl-l">alertas Prometheus que criei para o serviço</span></li>
+          <li><span class="hl-n" data-count="153">153</span><span class="hl-l">testes unitários que escrevi no leitor de dados em Rust</span></li>
+          <li><span class="hl-n" data-count="7">7</span><span class="hl-l">alertas Prometheus que criei para o serviço</span></li>
         </ul>
       </div>
     </section>
@@ -176,7 +176,7 @@
               <ul class="timeline-list">
                 <li>Contribuo no <strong>leitor de dados de mercado em tempo real em Rust (Tokio)</strong>, que consome o feed da Cedro (ações, opções e futuros) e grava em TimescaleDB e Redis.</li>
                 <li>Implementei a <strong>recuperação de negócios perdidos</strong> na sequência recebida (gap-fill) e a <strong>reconexão que retoma do último negócio</strong> em segundos.</li>
-                <li>Criei <strong>6 alertas Prometheus</strong> para o serviço, incluindo um watchdog que comprova que a própria cadeia de alertas está ativa e a métrica de atraso real dos negócios, cobertos por <strong>64 casos de teste de alertas e 121 testes unitários em Rust</strong>.</li>
+                <li>Criei <strong>7 alertas Prometheus</strong> para o serviço, incluindo um watchdog que comprova que a própria cadeia de alertas está ativa e a métrica de atraso real dos negócios, cobertos por <strong>36 casos de teste de alertas e 153 testes unitários em Rust</strong> que escrevi.</li>
                 <li>Construo pipelines ETL em Python com Prefect e Docker (ações, fundos, indicadores macroeconômicos, volatilidade e carteiras) e APIs REST que levam esses dados ao front-end.</li>
               </ul>
               <ul class="chips" aria-label="Tecnologias">
@@ -459,8 +459,8 @@
             <div class="story-body">
               <dl>
                 <div><dt>Problema</dt><dd>Um serviço em tempo real pode parar ou atrasar sem ninguém perceber. E um alerta quebrado é pior que nenhum, porque dá a falsa sensação de que está tudo bem.</dd></div>
-                <div><dt>O que eu fiz</dt><dd>Criei 6 alertas Prometheus para o serviço, incluindo um watchdog que comprova que a própria cadeia de alertas está ativa e uma métrica do atraso real dos negócios. Tratei as regras de alerta como código: cada uma tem teste.</dd></div>
-                <div><dt>Resultado</dt><dd>64 casos de teste de alertas e 121 testes unitários em Rust. Se um alerta deixar de disparar quando deveria, o teste quebra antes de chegar em produção.</dd></div>
+                <div><dt>O que eu fiz</dt><dd>Criei 7 alertas Prometheus para o serviço, incluindo um watchdog que comprova que a própria cadeia de alertas está ativa e uma métrica do atraso real dos negócios. Tratei as regras de alerta como código: cada uma tem teste.</dd></div>
+                <div><dt>Resultado</dt><dd>36 casos de teste de alertas e 153 testes unitários em Rust escritos por mim. Se um alerta deixar de disparar quando deveria, o teste quebra antes de chegar em produção.</dd></div>
               </dl>
               <ul class="chips"><li>Prometheus</li><li>Alertmanager</li><li>Grafana</li><li>cargo test</li></ul>
             </div>
