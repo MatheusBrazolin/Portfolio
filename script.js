@@ -233,6 +233,20 @@
       statusText.textContent = gap ? 'buscando o que faltou' : 'recebendo';
     }
 
+    // Passo a passo ao lado (desktop) ou em cima (celular): 0 recebe, 1 vê o buraco, 2 pede, 3 recupera
+    const steps = [...document.querySelectorAll('#sim-steps li')];
+    function setStep(n) {
+      steps.forEach((li, i) => {
+        li.classList.toggle('is-on', i === n);
+        li.classList.toggle('is-done', i < n);
+      });
+    }
+
+    // No celular os avisos ficam curtos para caber numa linha
+    const narrow = window.matchMedia('(max-width: 560px)');
+    const msgGap = (a, b) => narrow.matches ? `faltaram ${a}–${b} · buscando` : `faltaram os nº ${a} a ${b}, buscando`;
+    const msgOk = () => narrow.matches ? '3 recuperados, sem duplicar' : '3 negócios recuperados, sem duplicar';
+
     function tick() {
       if (busy) return;
       sinceGap++;
@@ -247,18 +261,21 @@
         seqEl.textContent = seq;
         setTimeout(() => {
           setStatus(true);
-          push(noteRow(`faltaram os nº ${first} a ${last}, buscando`, 'is-alert'));
+          setStep(1);
+          push(noteRow(msgGap(first, last), 'is-alert'));
         }, 450);
+        setTimeout(() => setStep(2), 1050);
         [first, first + 1, last].forEach((s, i) => {
-          setTimeout(() => push(tradeRow(s, 'is-recovered')), 1600 + i * 420);
+          setTimeout(() => { if (i === 0) setStep(3); push(tradeRow(s, 'is-recovered')); }, 1600 + i * 420);
         });
         setTimeout(() => {
-          push(noteRow('3 negócios recuperados, sem duplicar', 'is-ok'));
+          push(noteRow(msgOk(), 'is-ok'));
           setStatus(false);
           busy = false;
         }, 3200);
         return;
       }
+      setStep(0);
       seq++;
       seqEl.textContent = seq;
       push(tradeRow(seq));
@@ -275,7 +292,8 @@
 
     if (reduceMotion) {
       // Estático: mostra um episódio completo de lacuna e recuperação
-      push(noteRow('3 negócios recuperados, sem duplicar', 'is-ok'));
+      push(noteRow(msgOk(), 'is-ok'));
+      setStep(4);
       [...rowsEl.children].forEach(li => { li.style.animation = 'none'; });
     } else {
       const start = () => { if (!timer) timer = setInterval(tick, 1000); };

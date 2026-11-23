@@ -427,6 +427,7 @@
             </summary>
             <div class="story-body">
             <!-- Simulação: o leitor de dados de mercado e o gap-fill -->
+            <div class="sim">
             <figure class="feed feed-in-case" aria-labelledby="feed-intro-title">
               <figcaption class="feed-intro">
                 <strong id="feed-intro-title">Veja na prática (simulação)</strong>
@@ -435,13 +436,20 @@
               </figcaption>
               <div class="feed-head" aria-hidden="true">
                 <span class="feed-status"><span class="feed-dot"></span><span id="feed-status-text">recebendo</span></span>
-                <span class="feed-seq">último nº <b id="feed-seq">18412</b></span>
+                <span class="feed-seq"><span class="feed-seq-long">último </span>nº <b id="feed-seq">18412</b></span>
               </div>
               <div class="feed-cols" aria-hidden="true">
                 <span>nº</span><span>ativo</span><span class="r">preço</span><span class="r">qtd</span><span class="r">hora</span>
               </div>
               <ol class="feed-rows" id="feed-rows" aria-hidden="true"></ol>
             </figure>
+            <ol class="sim-steps" id="sim-steps" aria-label="O que o leitor faz, passo a passo">
+              <li class="is-on"><b>Recebe</b><span>Os negócios chegam em ordem, numerados pela B3.</span></li>
+              <li class="sim-step-gap"><b>Vê o buraco</b><span>O número pulou: alguns negócios não chegaram.</span></li>
+              <li><b>Pede de novo</b><span>Busca na fonte só o trecho que faltou.</span></li>
+              <li><b>Recupera</b><span>Grava o que voltou, sem nada em dobro.</span></li>
+            </ol>
+            </div>
               <dl>
                 <div><dt>Em poucas palavras</dt><dd>A plataforma recebe, ao vivo, cada negócio feito na bolsa. Quando a conexão oscila, alguns se perdem no caminho. Fiz o sistema perceber sozinho o que faltou e pedir de novo, sem gravar nada em dobro.</dd></div>
                 <div><dt>Problema</dt><dd>O leitor consome em tempo real o feed da Cedro (ações, opções e futuros) e grava no TimescaleDB. Negócio perdido numa oscilação não voltava sem reconectar, e a reconexão chegava a levar mais de um minuto até assinar o primeiro ativo.</dd></div>
