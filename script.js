@@ -316,4 +316,7 @@
       showToast(email);
     }
   });
+
+  // Chegou até aqui sem erro: o <head> não precisa desligar as animações
+  window.__siteReady = true;
 })();

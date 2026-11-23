@@ -54,6 +54,10 @@
       }
       document.documentElement.setAttribute('data-theme', t);
       document.documentElement.classList.add('js');
+      // Se o script.js não carregar ou falhar no meio, mostra o conteúdo sem animação
+      window.addEventListener('load', function () {
+        if (!window.__siteReady) document.documentElement.classList.remove('js');
+      });
     })();
   </script>
 
