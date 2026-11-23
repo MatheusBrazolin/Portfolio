@@ -421,8 +421,9 @@
         <div class="cases">
           <details class="case-story reveal">
             <summary>
-              <span class="story-where">RCO Tecnologia · gap-fill no leitor de dados de mercado em Rust</span>
-              <span class="story-title">Quando a conexão falha, o sistema busca sozinho o que perdeu</span>
+              <span class="story-where">RCO Tecnologia · leitor de dados de mercado em Rust</span>
+              <span class="story-title">Gap-fill: recuperação automática de negócios perdidos</span>
+              <span class="story-hook">Quando a conexão com a bolsa falha, o sistema percebe o que faltou e busca de novo, sozinho.</span>
               <span class="story-toggle" aria-hidden="true"></span>
             </summary>
             <div class="story-body">
@@ -462,11 +463,47 @@
 
           <details class="case-story reveal">
             <summary>
-              <span class="story-where">RCO Tecnologia · auditoria de dados (API e painel interno)</span>
-              <span class="story-title">Um sistema que avisa quando o dado está errado, não só quando o servidor cai</span>
+              <span class="story-where">RCO Tecnologia · motor em Python e painel interno</span>
+              <span class="story-title">Auditoria de dados: monitoramento contínuo da qualidade da informação</span>
+              <span class="story-hook">Avisa quando o dado está errado, não só quando o servidor cai.</span>
               <span class="story-toggle" aria-hidden="true"></span>
             </summary>
             <div class="story-body">
+            <!-- Simulação: a tela da auditoria de dados -->
+            <div class="sim">
+              <figure class="feed feed-in-case audit" aria-labelledby="audit-intro-title">
+                <figcaption class="feed-intro">
+                  <strong id="audit-intro-title">Veja na prática (simulação)</strong>
+                  <span>A cada rodada o motor confere cada dado. Fora do limite uma vez, fica em observação;
+                  na segunda rodada ruim, vira problema confirmado e entra no histórico.</span>
+                </figcaption>
+                <div class="audit-head">
+                  <span class="audit-pulse" aria-hidden="true">
+                    <svg viewBox="0 0 120 28" preserveAspectRatio="none"><path class="audit-pulse-base" d="M0 14 H30 L34 10 L37 14 H46 L50 3 L54 24 L58 14 H70 L74 9 L78 14 H120"/><path class="audit-pulse-run" pathLength="100" d="M0 14 H30 L34 10 L37 14 H46 L50 3 L54 24 L58 14 H70 L74 9 L78 14 H120"/></svg>
+                  </span>
+                  <span class="audit-motor" aria-hidden="true"><span class="audit-motor-long">motor gravando · </span>rodada <b id="audit-round">1284</b></span>
+                  <button type="button" class="btn btn-small btn-ghost audit-btn" id="audit-btn">Medir agora</button>
+                </div>
+                <div class="audit-verdict" id="audit-verdict" aria-hidden="true"><span class="audit-dot"></span><span id="audit-verdict-text">Tudo em dia</span></div>
+                <ul class="audit-checks" id="audit-checks" aria-hidden="true">
+                  <li data-check="0"><span class="audit-q">chegou?</span><span class="audit-name">Cotações das ações em dia</span><span class="audit-val">atraso de 4 s</span><span class="audit-pill">Em dia</span></li>
+                  <li data-check="1"><span class="audit-q">inteiro?</span><span class="audit-name">Negócios só em dia de pregão</span><span class="audit-val">0 fora do pregão</span><span class="audit-pill">Em dia</span></li>
+                  <li data-check="2"><span class="audit-q">inteiro?</span><span class="audit-name">Opção vencida sem gregas</span><span class="audit-val">0 publicadas</span><span class="audit-pill">Em dia</span></li>
+                  <li data-check="3"><span class="audit-q">rodou?</span><span class="audit-name">Carga diária da B3</span><span class="audit-val">terminou às 06:12</span><span class="audit-pill">Em dia</span></li>
+                  <li data-check="4" class="is-off"><span class="audit-q">chegou?</span><span class="audit-name">Bolsas internacionais</span><span class="audit-val">mercado fechado</span><span class="audit-pill">Fora do horário</span></li>
+                </ul>
+                <div class="audit-history" aria-hidden="true">
+                  <span class="audit-history-title">O que aconteceu</span>
+                  <ol id="audit-history"><li class="is-calm">Nenhuma mudança, e o motor gravou o período inteiro.</li></ol>
+                </div>
+              </figure>
+              <ol class="sim-steps" id="audit-steps" aria-label="O que a auditoria faz, passo a passo">
+                <li class="is-on"><b>Mede</b><span>A cada rodada, confere se cada dado rodou, chegou e faz sentido.</span></li>
+                <li class="sim-step-gap"><b>Desconfia</b><span>Fora do limite uma vez: fica em observação, sem alarme falso.</span></li>
+                <li class="sim-step-bad"><b>Confirma</b><span>Duas rodadas ruins seguidas: vira problema confirmado.</span></li>
+                <li><b>Registra</b><span>O histórico guarda quando quebrou e quando voltou ao normal.</span></li>
+              </ol>
+            </div>
               <dl>
                 <div><dt>Em poucas palavras</dt><dd>Um sistema pode estar no ar e, mesmo assim, mostrar números errados. Criei uma auditoria que confere sozinha, o tempo todo, se os dados chegaram, estão em dia e fazem sentido, e mostra numa tela o que está errado e desde quando.</dd></div>
                 <div><dt>Problema</dt><dd>Os monitores só olhavam se os serviços estavam de pé. A primeira rodada da auditoria, em setembro de 2026, achou erros que rodavam havia meses com tudo verde: negócios de domingo entrando no banco (cópias dos de sexta), opção vencida ainda publicando gregas, cotação de fevereiro servida como atual e o volume das opções de Ibovespa 100 vezes maior que o real. E 9 dos 10 alertas vigiavam métricas que já não existiam.</dd></div>

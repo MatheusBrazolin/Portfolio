@@ -314,6 +314,112 @@
     }
   }
 
+  // ─── Auditoria de dados (simulação da tela) ──────────────────────────────────
+  const auditChecks = document.getElementById('audit-checks');
+  if (auditChecks) {
+    const rows = [...auditChecks.children];
+    const target = rows[1];
+    const roundEl = document.getElementById('audit-round');
+    const verdict = document.getElementById('audit-verdict');
+    const verdictText = document.getElementById('audit-verdict-text');
+    const historyEl = document.getElementById('audit-history');
+    const btn = document.getElementById('audit-btn');
+    const auditSteps = [...document.querySelectorAll('#audit-steps li')];
+    const PILL = { ok: 'Em dia', warn: 'Sob observação', bad: 'Problema confirmado' };
+    const VERDICT = { ok: 'Tudo em dia', warn: '1 checagem sob observação', bad: '1 problema novo nas últimas 24 h' };
+    // Cada rodada: o estado da checagem "Negócios só em dia de pregão" e a etapa acesa
+    const script = [
+      { state: 'ok', step: 0 },
+      { state: 'ok', step: 0 },
+      { state: 'warn', step: 1 },
+      { state: 'bad', step: 2, event: 'bad' },
+      { state: 'bad', step: 2 },
+      { state: 'ok', step: 3, event: 'ok' },
+      { state: 'ok', step: 3 }
+    ];
+    let pos = 0;
+    let round = 1284;
+    let timer = null;
+    let cooldown = null;
+    const hhmm = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    function setAuditStep(n) {
+      auditSteps.forEach((li, i) => {
+        li.classList.toggle('is-on', i === n);
+        li.classList.toggle('is-done', i < n);
+      });
+    }
+
+    function addEvent(kind) {
+      const calm = historyEl.querySelector('.is-calm');
+      if (calm) calm.remove();
+      const li = document.createElement('li');
+      li.className = kind === 'bad' ? 'ev-bad' : 'ev-ok';
+      li.innerHTML = `<b>${kind === 'bad' ? 'quebrou' : 'voltou ao normal'}</b> · Negócios só em dia de pregão · ${hhmm()}`;
+      historyEl.prepend(li);
+      while (historyEl.children.length > 2) historyEl.lastElementChild.remove();
+    }
+
+    function apply(p) {
+      target.classList.toggle('is-warn', p.state === 'warn');
+      target.classList.toggle('is-bad', p.state === 'bad');
+      target.querySelector('.audit-pill').textContent = PILL[p.state];
+      target.querySelector('.audit-val').textContent = p.state === 'ok' ? '0 fora do pregão' : '1.204 num domingo';
+      verdict.classList.toggle('is-warn', p.state === 'warn');
+      verdict.classList.toggle('is-bad', p.state === 'bad');
+      verdictText.textContent = VERDICT[p.state];
+      if (p.event) addEvent(p.event);
+      setAuditStep(p.step);
+    }
+
+    function measure() {
+      round++;
+      roundEl.textContent = round.toLocaleString('pt-BR');
+      const p = script[pos];
+      pos = (pos + 1) % script.length;
+      if (reduceMotion) { apply(p); return; }
+      // Varredura: cada linha acende enquanto é medida, e o veredito sai no fim
+      rows.forEach((li, i) => {
+        setTimeout(() => li.classList.add('is-measuring'), i * 110);
+        setTimeout(() => li.classList.remove('is-measuring'), i * 110 + 260);
+      });
+      setTimeout(() => apply(p), rows.length * 110 + 120);
+    }
+
+    const ROUND_MS = 2800;
+    const start = () => { if (!timer) timer = setInterval(measure, ROUND_MS); };
+    const stop = () => { clearInterval(timer); timer = null; };
+
+    btn.addEventListener('click', () => {
+      stop();
+      measure();
+      let left = 6;
+      btn.disabled = true;
+      btn.textContent = `De novo em ${left} s`;
+      clearInterval(cooldown);
+      cooldown = setInterval(() => {
+        left--;
+        if (left > 0) { btn.textContent = `De novo em ${left} s`; return; }
+        clearInterval(cooldown);
+        btn.disabled = false;
+        btn.textContent = 'Medir agora';
+      }, 1000);
+      if (!reduceMotion) setTimeout(() => sync(), ROUND_MS);
+    });
+
+    const holder = auditChecks.closest('details');
+    const sync = () => (!reduceMotion && holder && holder.open && !document.hidden ? start() : stop());
+    if (reduceMotion) {
+      // Estático: um episódio inteiro já registrado no histórico
+      apply({ state: 'bad', step: 2, event: 'bad' });
+      apply({ state: 'ok', step: 4, event: 'ok' });
+    } else if (holder) {
+      holder.addEventListener('toggle', sync);
+      document.addEventListener('visibilitychange', sync);
+      sync();
+    }
+  }
+
   // ─── Copiar e-mail ────────────────────────────────────────────────────────────
   const toast = document.getElementById('toast');
   let toastTimer;
