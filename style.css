@@ -919,6 +919,7 @@ code {
 
 /* Simulação da auditoria de dados */
 .audit { --ok: var(--up); --warn: var(--gap); --bad: var(--down); }
+[data-theme="light"] .audit { --warn: #7a4f0c; --bad: #b42536; }
 .audit-head {
   display: flex;
   align-items: center;
@@ -1021,8 +1022,32 @@ code {
   .audit-btn { min-width: 0; padding-inline: 0.6rem; font-size: 0.78rem; }
 }
 
-@media (min-width: 900px) {
+/* Lado a lado só com espaço de sobra; abaixo disso o passo a passo vai para baixo */
+@media (min-width: 1100px) {
   .sim { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2.2rem; align-items: center; }
+}
+
+/* As simulações se ajustam ao espaço que elas mesmas têm, não ao tamanho da tela:
+   numa janela estreita, com zoom ou ao lado do passo a passo, a tabela vira o
+   formato compacto em vez de espremer o texto */
+.sim .feed { container: sim / inline-size; }
+@container sim (max-width: 560px) {
+  .feed-cols, .feed-row { grid-template-columns: 3.6rem minmax(0, 1fr) 4.2rem; }
+  .feed-cols span:nth-child(n+4), .feed-row > span:nth-child(n+4) { display: none; }
+  .feed-row.is-alert, .feed-row.is-ok { grid-template-columns: 1fr; }
+  .feed-row.is-recovered { box-shadow: inset 3px 0 0 var(--up); }
+  .feed-row.is-recovered .tk::after { margin-left: 0.4rem; padding: 0; border: 0; font-size: 0.62rem; }
+  .audit-motor-long { display: none; }
+  .audit-checks li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "name pill" "val pill";
+    row-gap: 0.1rem;
+    column-gap: 0.6rem;
+  }
+  .audit-q { display: none; }
+  .audit-name { grid-area: name; font-size: 0.85rem; }
+  .audit-val { grid-area: val; text-align: left; font-size: 0.72rem; }
+  .audit-pill { grid-area: pill; min-width: 0; }
 }
 
 /* Celular: a simulação vai de ponta a ponta no card, sem caixa dentro de caixa,
@@ -1081,7 +1106,7 @@ code {
   -webkit-mask-image: linear-gradient(225deg, #000, transparent 55%);
 }
 .contact-title {
-  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  font-size: clamp(2.1rem, 6vw + 1rem, 4.8rem);
   font-weight: 800;
   font-stretch: 118%;
   letter-spacing: -0.04em;
@@ -1230,4 +1255,31 @@ code {
   .feed-row.is-alert, .feed-row.is-ok { grid-template-columns: 1fr; }
   .feed-row.is-recovered .tk::after { margin-left: 0.3rem; padding-inline: 0.3rem; }
   .feed-head { padding-inline: 0.85rem; font-size: 0.74rem; white-space: nowrap; }
+}
+
+/* Simulação dos cases ocupa o card inteiro (o limite de 560 px é da versão antiga) */
+.sim .feed { max-width: none; }
+
+/* Destaques do topo no celular: lista com o número ao lado do texto, em vez de
+   duas colunas estreitas com o texto quebrando em quatro linhas */
+@media (max-width: 480px) {
+  .highlights { grid-template-columns: 1fr; }
+  .highlights li,
+  .highlights li + li,
+  .highlights li:nth-child(n+3) {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hl-n { flex: 0 0 4.6rem; font-size: 2.1rem; }
+  .hl-l { max-width: none; }
+}
+
+/* E-mail do contato encolhe com a tela para nunca ser cortado */
+@media (max-width: 400px) {
+  .contact-email { font-size: min(0.88rem, 3.6vw); }
+  .contact-email-row { padding-left: 0.85rem; gap: 0.4rem; }
 }
