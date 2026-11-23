@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://matheus-brazolin-portfolio.vercel.app/" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0d0d14" />
+  <meta name="theme-color" content="#0e1116" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="profile" />
@@ -40,7 +40,7 @@
       "https://www.linkedin.com/in/matheus-brazolin-70b57322b/",
       "https://github.com/MatheusBrazolin"
     ],
-    "knowsAbout": ["Python", "Rust", "TypeScript", "PostgreSQL", "TimescaleDB", "Redis", "Prefect", "NestJS", "Next.js", "React", "Docker", "Prometheus"]
+    "knowsAbout": ["Python", "Rust", "TypeScript", "PostgreSQL", "TimescaleDB", "Redis", "Prefect", "NestJS", "Fastify", "Next.js", "React", "Docker", "Prometheus"]
   }
   </script>
 
@@ -59,17 +59,21 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
   <!-- NAVEGAÇÃO -->
   <header class="nav-header">
     <div class="nav-inner">
-      <a href="#inicio" class="nav-logo" aria-label="Início">MB<span class="accent">.</span></a>
+      <a href="#inicio" class="nav-logo" aria-label="Início">
+        <span class="logo-mark" aria-hidden="true">MB</span>
+        <span class="logo-text">Matheus Brazolin</span>
+      </a>
       <nav aria-label="Seções">
         <ul class="nav-links" id="nav-links">
           <li><a href="#experiencia" class="nav-link" data-section="experiencia">Experiência</a></li>
@@ -77,6 +81,7 @@
           <li><a href="#stack"       class="nav-link" data-section="stack">Stack</a></li>
           <li><a href="#formacao"    class="nav-link" data-section="formacao">Formação</a></li>
           <li><a href="#contato"     class="nav-link" data-section="contato">Contato</a></li>
+          <li class="nav-indicator" aria-hidden="true"></li>
         </ul>
       </nav>
       <div class="nav-right">
@@ -99,50 +104,46 @@
 
     <!-- HERO -->
     <section class="hero" id="inicio">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="container hero-grid">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid-lines"></div>
+        <div class="hero-orb hero-orb-a"></div>
+        <div class="hero-orb hero-orb-b"></div>
+      </div>
+
+      <div class="container hero-layout hero-solo">
         <div class="hero-text">
-          <p class="status-pill"><span class="status-dot" aria-hidden="true"></span>Aberto a oportunidades · SP · híbrido ou remoto</p>
-          <h1 class="hero-name">Matheus Brazolin</h1>
-          <p class="hero-role">Desenvolvedor Full Stack <span class="muted">— back-end e engenharia de dados</span></p>
-          <p class="hero-bio">
-            Construo sistemas de dados em produção no mercado financeiro: ingestão de dados de mercado
-            em tempo real com <strong>Rust</strong>, pipelines com <strong>Python e Prefect</strong>,
-            <strong>PostgreSQL/TimescaleDB</strong> e <strong>Redis</strong>. Fora do trabalho, entrego
-            aplicações completas em <strong>TypeScript</strong>, sempre com testes e CI.
+          <p class="hero-kicker load-in" style="--d:0">Desenvolvedor Full Stack em São Paulo</p>
+          <h1 class="hero-name" aria-label="Matheus Brazolin">
+            <span class="hero-line" data-split>Matheus</span>
+            <span class="hero-line" data-split>Brazolin</span>
+          </h1>
+          <p class="hero-bio load-in" style="--d:4">
+            Construo sistemas de dados que rodam em produção no mercado financeiro, do leitor de
+            dados de mercado em <strong>Rust</strong> aos pipelines em <strong>Python</strong>, e
+            aplicações completas em <strong>TypeScript</strong>, do banco ao deploy, sempre com testes e CI.
           </p>
-          <div class="hero-cta">
-            <a href="assets/curriculo-matheus-brazolin.pdf" download class="btn btn-primary">
+          <div class="hero-cta load-in" style="--d:5">
+            <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+            <a href="assets/curriculo-matheus-brazolin.pdf" download class="btn btn-ghost">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Baixar currículo
             </a>
-            <a href="#projetos" class="btn btn-ghost">Ver projetos</a>
           </div>
-          <ul class="hero-links" aria-label="Perfis">
+          <ul class="hero-links load-in" style="--d:6" aria-label="Perfis">
             <li><a href="https://www.linkedin.com/in/matheus-brazolin-70b57322b/" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="https://github.com/MatheusBrazolin" target="_blank" rel="noopener">GitHub</a></li>
             <li><a href="mailto:matheusbrazolin013@gmail.com">matheusbrazolin013@gmail.com</a></li>
           </ul>
         </div>
 
-        <aside class="facts-card" aria-label="Resumo rápido">
-          <p class="facts-title">Resumo rápido</p>
-          <dl class="facts">
-            <div><dt>Atualmente</dt><dd>Desenvolvedor Full Stack na RCO Tecnologia / OTM Invest <span class="muted">(grupo BTG Pactual – Necton)</span></dd></div>
-            <div><dt>Foco</dt><dd>Back-end, dados em tempo real, APIs e observabilidade</dd></div>
-            <div><dt>Stack principal</dt><dd>Python · Rust · TypeScript · PostgreSQL · Redis</dd></div>
-            <div><dt>Formação</dt><dd>ADS (Anhembi Morumbi) · Pós em Full Stack (FIAP, em curso)</dd></div>
-            <div><dt>Idiomas</dt><dd>Português nativo · Inglês avançado</dd></div>
-          </dl>
-        </aside>
       </div>
 
       <div class="container">
-        <ul class="highlights" aria-label="Destaques">
-          <li><span class="hl-n">Produção</span><span class="hl-l">dados de mercado em tempo real</span></li>
-          <li><span class="hl-n">3</span><span class="hl-l">projetos próprios no ar</span></li>
-          <li><span class="hl-n">40</span><span class="hl-l">arquivos de teste nos projetos</span></li>
-          <li><span class="hl-n">CI</span><span class="hl-l">testes e build automáticos a cada push</span></li>
+        <ul class="highlights load-in" style="--d:7" aria-label="Destaques">
+          <li><span class="hl-n" data-count="4">4</span><span class="hl-l">projetos próprios no ar, com demo e código aberto</span></li>
+          <li><span class="hl-n" data-count="148">148</span><span class="hl-l">arquivos de teste somando os quatro projetos</span></li>
+          <li><span class="hl-n" data-count="121">121</span><span class="hl-l">testes unitários no leitor de dados em Rust</span></li>
+          <li><span class="hl-n" data-count="6">6</span><span class="hl-l">alertas Prometheus que criei para o serviço</span></li>
         </ul>
       </div>
     </section>
@@ -151,15 +152,15 @@
     <section class="section" id="experiencia">
       <div class="container">
         <header class="section-head reveal">
-          <p class="section-label">Experiência</p>
-          <h2 class="section-title">Onde trabalhei</h2>
+          <h2 class="section-title">Experiência</h2>
+          <p class="section-sub">Do primeiro emprego com dados e indicadores ao back-end em produção.</p>
         </header>
 
-        <ol class="timeline">
+        <ol class="timeline" id="timeline">
           <li class="timeline-item reveal">
             <div class="timeline-meta">
               <p class="timeline-date">mai/2026 – atual</p>
-              <p class="timeline-place">São Paulo · presencial</p>
+              <p class="timeline-place">São Paulo, presencial</p>
             </div>
             <div class="timeline-body">
               <h3 class="timeline-role">Desenvolvedor Full Stack</h3>
@@ -183,7 +184,7 @@
           <li class="timeline-item reveal">
             <div class="timeline-meta">
               <p class="timeline-date">set/2022 – mai/2026</p>
-              <p class="timeline-place">São Paulo · 3 anos e 9 meses</p>
+              <p class="timeline-place">São Paulo, 3 anos e 9 meses</p>
             </div>
             <div class="timeline-body">
               <h3 class="timeline-role">De Jovem Aprendiz a Analista Júnior</h3>
@@ -210,20 +211,20 @@
     <section class="section" id="projetos">
       <div class="container">
         <header class="section-head reveal">
-          <p class="section-label">Projetos</p>
-          <h2 class="section-title">O que eu construí</h2>
+          <h2 class="section-title">Projetos</h2>
           <p class="section-sub">Projetos próprios, com código aberto, testes e deploy. Cada um mostra o problema, as decisões técnicas e como garanti a qualidade.</p>
         </header>
 
         <!-- NexSales -->
         <article class="case reveal">
           <a class="case-shot" href="https://nexsales-pdv.vercel.app" target="_blank" rel="noopener" aria-label="Abrir demo do NexSales">
+            <span class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>nexsales-pdv.vercel.app</span></span>
             <img src="assets/projects/nexsales.jpg" alt="Tela de login do NexSales, com painel de vendas ao fundo" width="1200" height="750" loading="lazy" />
           </a>
           <div class="case-body">
             <p class="case-kicker">Projeto principal · fev/2026 – atual</p>
-            <h3 class="case-title">NexSales — PDV offline-first</h3>
-            <p class="case-lead">Ponto de venda para pequenos comércios que continua vendendo sem internet e sincroniza tudo ao reconectar, sem duplicar nada.</p>
+            <h3 class="case-title">NexSales</h3>
+            <p class="case-lead">Ponto de venda offline-first para pequenos comércios: continua vendendo sem internet e sincroniza tudo ao reconectar, sem duplicar nada.</p>
             <dl class="case-points">
               <div><dt>Problema</dt><dd>Comércio pequeno perde venda quando a internet cai, e sistemas offline costumam duplicar ou perder registros na volta.</dd></div>
               <div><dt>Decisões técnicas</dt><dd>Catálogo em IndexedDB (Dexie) e fila local de vendas com <strong>replay idempotente</strong> via <code>client_uuid</code>; permissões no servidor e <strong>RLS no PostgreSQL</strong>; cancelamento com restauração atômica de estoque em função PL/pgSQL.</dd></div>
@@ -243,20 +244,21 @@
         <!-- KitManager -->
         <article class="case case-reverse reveal">
           <a class="case-shot" href="https://kitnet-manager-zeta.vercel.app" target="_blank" rel="noopener" aria-label="Abrir demo do KitManager">
-            <img src="assets/projects/kitmanager.jpg" alt="Tela de login do KitManager" width="1200" height="750" loading="lazy" />
+            <span class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>kitnet-manager-zeta.vercel.app</span></span>
+            <img src="assets/projects/kitmanager.jpg" alt="Dashboard do KitManager: quanto o proprietário recebeu no mês, ocupação das unidades e gráficos de recebimentos e gastos" width="1200" height="750" loading="lazy" />
           </a>
           <div class="case-body">
-            <p class="case-kicker">SaaS · 2026</p>
-            <h3 class="case-title">KitManager — gestão de imóveis</h3>
-            <p class="case-lead">SaaS para donos de kitnets controlarem imóveis, moradores, pagamentos e despesas sem planilha.</p>
+            <p class="case-kicker">SaaS · jun/2026 – atual · redesenhado em outubro</p>
+            <h3 class="case-title">KitManager</h3>
+            <p class="case-lead">SaaS para quem aluga kitnets: imóveis, moradores, recebimentos, imobiliárias e gastos num painel só, sem planilha.</p>
             <dl class="case-points">
-              <div><dt>Problema</dt><dd>Pequenos proprietários controlam aluguéis em planilhas, sem visão de vencimentos, ocupação ou inadimplência.</dd></div>
-              <div><dt>Decisões técnicas</dt><dd>API REST modular em NestJS com Prisma; <strong>dados isolados por conta</strong>, <strong>perfis de acesso</strong> (gerente/visualizador) e limites por plano (FREE/PRO) aplicados por guards no back-end.</dd></div>
-              <div><dt>Entrega</dt><dd>Dashboard de ocupação e vencimentos, convites para equipe e deploy único na Vercel (front estático + back serverless) com Postgres no Supabase.</dd></div>
-              <div><dt>Qualidade</dt><dd>23 arquivos de testes unitários e e2e, 2 workflows de CI, Sentry no front e no back, Docker Compose para rodar local; 92 commits.</dd></div>
+              <div><dt>Problema</dt><dd>Pequenos proprietários controlam aluguéis em planilhas, sem visão de vencimentos, ocupação, inadimplência ou de quanto fica com a imobiliária.</dd></div>
+              <div><dt>Decisões técnicas</dt><dd>API REST modular em NestJS com Prisma; <strong>dados isolados por conta</strong>, perfis de acesso e limites por plano aplicados por guards. O <strong>repasse é gravado no momento do pagamento</strong>, então mudar a taxa da imobiliária (percentual ou fixa) não reescreve meses já fechados.</dd></div>
+              <div><dt>Entrega</dt><dd>Interface redesenhada com tema escuro, dashboard do que entrou de fato no mês, relatório anual com exportação CSV, convites para equipe, recuperação de senha por e-mail e LGPD (exportar dados e apagar a conta).</dd></div>
+              <div><dt>Qualidade</dt><dd>45 arquivos de testes unitários e e2e, 4 workflows no GitHub Actions (CI, verificação de deploy, migração de produção e manutenção do banco), Sentry no front e no back; 121 commits.</dd></div>
             </dl>
             <ul class="chips" aria-label="Tecnologias">
-              <li>NestJS</li><li>Prisma</li><li>PostgreSQL</li><li>React 19</li><li>JWT</li><li>Docker</li><li>Sentry</li>
+              <li>NestJS</li><li>Prisma</li><li>PostgreSQL</li><li>React 19</li><li>TanStack Query</li><li>JWT</li><li>Docker</li><li>Sentry</li><li>Vercel</li>
             </ul>
             <div class="case-links">
               <a class="btn btn-small btn-primary" href="https://kitnet-manager-zeta.vercel.app" target="_blank" rel="noopener">Ver demo</a>
@@ -265,23 +267,72 @@
           </div>
         </article>
 
-        <!-- Easy Food -->
-        <article class="case case-compact reveal">
-          <a class="case-shot" href="https://easyfood-one.vercel.app/" target="_blank" rel="noopener" aria-label="Abrir demo do Easy Food">
-            <img src="assets/projects/easyfood.jpg" alt="Página inicial do Easy Food" width="1200" height="750" loading="lazy" />
+        <!-- DevDesk -->
+        <article class="case reveal">
+          <a class="case-shot" href="https://devdesk-tklq.onrender.com" target="_blank" rel="noopener" aria-label="Abrir demo do DevDesk">
+            <span class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>devdesk-tklq.onrender.com</span></span>
+            <img src="assets/projects/devdesk.jpg" alt="Painel Hoje do DevDesk no tema escuro: reviews pedidas, PRs parados, em andamento e mergeados na semana" width="1200" height="750" loading="lazy" />
           </a>
           <div class="case-body">
-            <p class="case-kicker">Projeto em equipe · Bootcamp Generation · 2022</p>
-            <h3 class="case-title">Easy Food — e-commerce de orgânicos</h3>
-            <p class="case-lead">Plataforma alinhada ao ODS 2 (Fome Zero) que aproxima pequenos produtores de consumidores. Desenvolvida em equipe em 2 meses, com metodologia ágil.</p>
+            <p class="case-kicker">Projeto próprio · out/2026 · versão 1.1</p>
+            <h3 class="case-title">DevDesk</h3>
+            <p class="case-lead">Painel de trabalho para desenvolvedores: o que pede atenção no GitHub, notas e agenda numa tela só, com modo foco e modo TV.</p>
+            <dl class="case-points">
+              <div><dt>Problema</dt><dd>A rotina de quem programa fica espalhada entre GitHub, agenda e anotações, e uma review parada só aparece quando alguém cobra.</dd></div>
+              <div><dt>Decisões técnicas</dt><dd>Monorepo com API Fastify em <strong>arquitetura hexagonal</strong> e contratos Zod compartilhados com o front; <strong>só leitura no GitHub</strong>, com uma trava no código que recusa qualquer escrita; token cifrado com AES-256-GCM e sessão por cookie httpOnly.</dd></div>
+              <div><dt>Entrega</dt><dd>Fila de review por prioridade, standup montado sozinho, métricas de 8 semanas, calendário com agendas conectadas (.ics), notificações Web Push, app instalável (PWA), em português e inglês.</dd></div>
+              <div><dt>Qualidade</dt><dd>78 arquivos de teste (Vitest e Playwright), CI, CodeQL e Dependabot, 14 ADRs registrando as decisões de arquitetura; 59 commits.</dd></div>
+            </dl>
             <ul class="chips" aria-label="Tecnologias">
-              <li>ASP.NET Core</li><li>C#</li><li>React</li><li>SQL Server</li><li>JWT</li><li>MSTest</li>
+              <li>React 19</li><li>TypeScript</li><li>Fastify</li><li>PostgreSQL</li><li>Drizzle</li><li>Zod</li><li>Tailwind CSS</li><li>Playwright</li>
             </ul>
             <div class="case-links">
-              <a class="btn btn-small btn-ghost" href="https://easyfood-one.vercel.app/" target="_blank" rel="noopener">Ver demo</a>
+              <a class="btn btn-small btn-primary" href="https://devdesk-tklq.onrender.com" target="_blank" rel="noopener">Ver demo</a>
+              <a class="btn btn-small btn-ghost" href="https://github.com/MatheusBrazolin/devdesk" target="_blank" rel="noopener">Código no GitHub</a>
             </div>
           </div>
         </article>
+
+        <div class="case-pair">
+          <!-- Controle Financeiro -->
+          <article class="case case-compact reveal">
+            <a class="case-shot" href="https://controlefinanceiro-rouge.vercel.app" target="_blank" rel="noopener" aria-label="Abrir demo do Controle Financeiro">
+              <span class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>controlefinanceiro-rouge.vercel.app</span></span>
+              <img src="assets/projects/financas.jpg" alt="Dashboard do Controle Financeiro: entradas, saídas, saldo do mês e gastos por categoria" width="1200" height="750" loading="lazy" />
+            </a>
+            <div class="case-body">
+              <p class="case-kicker">Projeto próprio · 2026</p>
+              <h3 class="case-title">Controle Financeiro</h3>
+              <p class="case-lead">Finanças pessoais em JavaScript puro, sem framework e sem dependências: orçamentos por mês, metas, recorrências, relatórios e exportação CSV. Funciona offline e os dados ficam só no navegador.</p>
+              <ul class="chips" aria-label="Tecnologias">
+                <li>JavaScript</li><li>ES Modules</li><li>Canvas</li><li>PWA</li><li>Service Worker</li><li>GitHub Actions</li>
+              </ul>
+              <div class="case-links">
+                <a class="btn btn-small btn-ghost" href="https://controlefinanceiro-rouge.vercel.app" target="_blank" rel="noopener">Ver demo</a>
+                <a class="btn btn-small btn-ghost" href="https://github.com/MatheusBrazolin/financial-control-js" target="_blank" rel="noopener">Código</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Easy Food -->
+          <article class="case case-compact reveal">
+            <a class="case-shot" href="https://easyfood-one.vercel.app/" target="_blank" rel="noopener" aria-label="Abrir demo do Easy Food">
+              <span class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>easyfood-one.vercel.app</span></span>
+              <img src="assets/projects/easyfood.jpg" alt="Página inicial do Easy Food" width="1200" height="750" loading="lazy" />
+            </a>
+            <div class="case-body">
+              <p class="case-kicker">Projeto em equipe · Bootcamp Generation · 2022</p>
+              <h3 class="case-title">Easy Food</h3>
+              <p class="case-lead">E-commerce de orgânicos alinhado ao ODS 2 (Fome Zero), que aproxima pequenos produtores de consumidores. Feito em equipe em 2 meses, com metodologia ágil.</p>
+              <ul class="chips" aria-label="Tecnologias">
+                <li>ASP.NET Core</li><li>C#</li><li>React</li><li>SQL Server</li><li>JWT</li><li>MSTest</li>
+              </ul>
+              <div class="case-links">
+                <a class="btn btn-small btn-ghost" href="https://easyfood-one.vercel.app/" target="_blank" rel="noopener">Ver demo</a>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -289,8 +340,8 @@
     <section class="section" id="stack">
       <div class="container">
         <header class="section-head reveal">
-          <p class="section-label">Stack</p>
-          <h2 class="section-title">Com o que eu trabalho</h2>
+          <h2 class="section-title">Stack</h2>
+          <p class="section-sub">Em destaque, o que uso todo dia.</p>
         </header>
         <div class="stack-grid">
           <div class="stack-group reveal">
@@ -299,7 +350,7 @@
           </div>
           <div class="stack-group reveal">
             <h3>Back-end e APIs</h3>
-            <ul class="chips"><li>APIs REST</li><li>Node.js</li><li>NestJS</li><li>Prisma</li><li>JWT</li><li>RBAC</li><li>Tokio</li></ul>
+            <ul class="chips"><li>APIs REST</li><li>Node.js</li><li>NestJS</li><li>Fastify</li><li>Prisma</li><li>Drizzle</li><li>JWT</li><li>Tokio</li></ul>
           </div>
           <div class="stack-group reveal">
             <h3>Dados</h3>
@@ -307,11 +358,11 @@
           </div>
           <div class="stack-group reveal">
             <h3>Front-end</h3>
-            <ul class="chips"><li>React</li><li>Next.js</li><li>Tailwind CSS</li><li>PWA</li><li>IndexedDB</li></ul>
+            <ul class="chips"><li>React</li><li>Next.js</li><li>TanStack</li><li>Tailwind CSS</li><li>PWA</li><li>IndexedDB</li></ul>
           </div>
           <div class="stack-group reveal">
             <h3>Infra, qualidade e observabilidade</h3>
-            <ul class="chips"><li>Docker</li><li>GitHub Actions</li><li>Vitest</li><li>cargo test</li><li>Prometheus</li><li>Grafana</li><li>Sentry</li><li>Vercel</li></ul>
+            <ul class="chips"><li>Docker</li><li>GitHub Actions</li><li>Vitest</li><li>Playwright</li><li>cargo test</li><li>Prometheus</li><li>Grafana</li><li>Sentry</li><li>Vercel</li></ul>
           </div>
           <div class="stack-group reveal">
             <h3>Também já usei</h3>
@@ -325,25 +376,91 @@
     <section class="section" id="formacao">
       <div class="container">
         <header class="section-head reveal">
-          <p class="section-label">Formação</p>
-          <h2 class="section-title">Estudo e certificações</h2>
+          <h2 class="section-title">Formação</h2>
         </header>
         <div class="edu-grid">
-          <ul class="edu-list reveal">
-            <li>
-              <p class="edu-title">Pós-Graduação em Full Stack Development</p>
-              <p class="edu-meta">FIAP · 2026 – em curso</p>
-            </li>
-            <li>
-              <p class="edu-title">Graduação em Análise e Desenvolvimento de Sistemas</p>
-              <p class="edu-meta">Universidade Anhembi Morumbi · 2022 – 2024</p>
-            </li>
-          </ul>
-          <ul class="edu-list reveal">
-            <li><p class="edu-title">Mastering Python</p><p class="edu-meta">FIAP · 2024</p></li>
-            <li><p class="edu-title">Teste de Software e Automação de Testes</p><p class="edu-meta">Udemy · 2025</p></li>
-            <li><p class="edu-title">Bootcamp Full Stack .NET</p><p class="edu-meta">Generation Brasil · 2022</p></li>
-          </ul>
+          <div class="edu-col reveal">
+            <h3 class="edu-head">Acadêmica</h3>
+            <ul class="edu-list">
+              <li>
+                <p class="edu-title">Pós-Graduação em Full Stack Development</p>
+                <p class="edu-meta">FIAP, 2026 – 2027 (em curso)</p>
+              </li>
+              <li>
+                <p class="edu-title">Graduação em Análise e Desenvolvimento de Sistemas</p>
+                <p class="edu-meta">Universidade Anhembi Morumbi, 2022 – 2024</p>
+              </li>
+            </ul>
+          </div>
+          <div class="edu-col reveal">
+            <h3 class="edu-head">Cursos e certificações</h3>
+            <ul class="edu-list">
+              <li><p class="edu-title">Mastering Python</p><p class="edu-meta">FIAP, 2024</p></li>
+              <li><p class="edu-title">Teste de Software e Automação de Testes</p><p class="edu-meta">Udemy, 2025</p></li>
+              <li><p class="edu-title">Bootcamp Full Stack .NET</p><p class="edu-meta">Generation Brasil, 2022</p></li>
+              <li><p class="edu-title">Excel Avançado</p><p class="edu-meta">Alura, 2026</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASES DE SUCESSO -->
+    <section class="section section-cases" id="cases">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2 class="section-title">Cases de sucesso</h2>
+          <p class="section-sub">Situações reais do trabalho, contadas como numa entrevista: o problema, o que eu fiz e o resultado. Toque para abrir.</p>
+        </header>
+
+        <div class="cases">
+          <details class="case-story reveal">
+            <summary>
+              <span class="story-where">RCO Tecnologia · leitor de dados de mercado em Rust</span>
+              <span class="story-title">Nenhum negócio perdido quando a conexão cai</span>
+              <span class="story-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="story-body">
+            <!-- Simulação: o leitor de dados de mercado e o gap-fill -->
+            <figure class="feed feed-in-case" aria-labelledby="feed-intro-title">
+              <figcaption class="feed-intro">
+                <strong id="feed-intro-title">Veja na prática (simulação)</strong>
+                <span>Cada linha é um negócio chegando. Quando alguns se perdem, o leitor avisa, busca de novo
+                e eles voltam marcados como recuperados.</span>
+              </figcaption>
+              <div class="feed-head" aria-hidden="true">
+                <span class="feed-status"><span class="feed-dot"></span><span id="feed-status-text">recebendo</span></span>
+                <span class="feed-seq">último nº <b id="feed-seq">18412</b></span>
+              </div>
+              <div class="feed-cols" aria-hidden="true">
+                <span>nº</span><span>ativo</span><span class="r">preço</span><span class="r">qtd</span><span class="r">hora</span>
+              </div>
+              <ol class="feed-rows" id="feed-rows" aria-hidden="true"></ol>
+            </figure>
+              <dl>
+                <div><dt>Problema</dt><dd>O leitor recebe em tempo real os negócios de ações, opções e futuros. Quando a conexão com o feed oscila, negócios podem se perder no caminho, e um buraco na sequência deixa os dados de mercado incompletos para quem analisa.</dd></div>
+                <div><dt>O que eu fiz</dt><dd>Implementei a recuperação de negócios perdidos (gap-fill): o leitor percebe o salto na numeração, busca só o trecho que faltou e grava sem duplicar. Também fiz a reconexão retomar a partir do último negócio recebido.</dd></div>
+                <div><dt>Resultado</dt><dd>A reconexão volta em segundos e a sequência gravada no TimescaleDB e no Redis fica completa, com o comportamento coberto por testes unitários em Rust.</dd></div>
+              </dl>
+              <ul class="chips"><li>Rust</li><li>Tokio</li><li>TimescaleDB</li><li>Redis</li></ul>
+            </div>
+          </details>
+
+          <details class="case-story reveal">
+            <summary>
+              <span class="story-where">RCO Tecnologia · observabilidade e testes</span>
+              <span class="story-title">Alertas que provam que estão funcionando</span>
+              <span class="story-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="story-body">
+              <dl>
+                <div><dt>Problema</dt><dd>Um serviço em tempo real pode parar ou atrasar sem ninguém perceber. E um alerta quebrado é pior que nenhum, porque dá a falsa sensação de que está tudo bem.</dd></div>
+                <div><dt>O que eu fiz</dt><dd>Criei 6 alertas Prometheus para o serviço, incluindo um watchdog que comprova que a própria cadeia de alertas está ativa e uma métrica do atraso real dos negócios. Tratei as regras de alerta como código: cada uma tem teste.</dd></div>
+                <div><dt>Resultado</dt><dd>64 casos de teste de alertas e 121 testes unitários em Rust. Se um alerta deixar de disparar quando deveria, o teste quebra antes de chegar em produção.</dd></div>
+              </dl>
+              <ul class="chips"><li>Prometheus</li><li>Alertmanager</li><li>Grafana</li><li>cargo test</li></ul>
+            </div>
+          </details>
         </div>
       </div>
     </section>
@@ -352,12 +469,14 @@
     <section class="section section-contact" id="contato">
       <div class="container">
         <div class="contact-card reveal">
-          <p class="section-label">Contato</p>
-          <h2 class="section-title">Vamos conversar?</h2>
-          <p class="contact-lead">Estou aberto a vagas de back-end, dados e full stack. O jeito mais rápido de falar comigo é por e-mail ou LinkedIn.</p>
+          <h2 class="contact-title">Vamos conversar?</h2>
+          <p class="contact-lead">Quer trocar uma ideia sobre algum projeto daqui ou sobre tecnologia? O jeito mais rápido de falar comigo é por e-mail ou LinkedIn.</p>
           <div class="contact-email-row">
             <a href="mailto:matheusbrazolin013@gmail.com" class="contact-email">matheusbrazolin013@gmail.com</a>
-            <button type="button" class="btn btn-small btn-ghost" id="copy-email" data-email="matheusbrazolin013@gmail.com">Copiar</button>
+            <button type="button" class="btn btn-small btn-ghost copy-btn" id="copy-email" data-email="matheusbrazolin013@gmail.com" aria-label="Copiar e-mail">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              <span>Copiar</span>
+            </button>
           </div>
           <div class="contact-actions">
             <a class="btn btn-primary" href="https://www.linkedin.com/in/matheus-brazolin-70b57322b/" target="_blank" rel="noopener">LinkedIn</a>
@@ -373,7 +492,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© 2026 Matheus Brazolin</p>
-      <p class="muted">HTML, CSS e JavaScript puro · sem frameworks · <a href="https://github.com/MatheusBrazolin/Portfolio" target="_blank" rel="noopener">código do site</a></p>
+      <p class="muted">HTML, CSS e JavaScript puro, sem frameworks. <a href="https://github.com/MatheusBrazolin/Portfolio" target="_blank" rel="noopener">Código do site</a></p>
     </div>
   </footer>
 
