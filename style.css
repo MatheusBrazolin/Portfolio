@@ -403,7 +403,17 @@ code {
 }
 .hero-line:last-child .ch { animation-delay: calc(320ms + var(--i) * 38ms); }
 @keyframes rise { to { transform: translateY(0); } }
-.hero-name:hover .hero-line:last-child { color: var(--text); transition: color 600ms var(--ease); }
+/* Passar o mouse preenche "Brazolin" letra por letra, da esquerda para a direita;
+   ao sair, a onda volta esvaziando da direita para a esquerda. A transição fica
+   no estado normal para valer nos dois sentidos. --n vem do script (nº de letras). */
+.hero-line:last-child { transition: color 500ms var(--ease); }
+.hero-line:last-child .ch {
+  color: transparent;
+  transition: color 520ms var(--ease);
+  transition-delay: calc((var(--n, 8) - 1 - var(--i)) * 55ms);
+}
+.hero-name:hover .hero-line:last-child { color: var(--text); }
+.hero-name:hover .hero-line:last-child .ch { color: var(--text); transition-delay: calc(var(--i) * 55ms); }
 
 .hero-bio {
   max-width: 34rem;
