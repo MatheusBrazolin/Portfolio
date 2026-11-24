@@ -26,6 +26,7 @@
     const text = line.textContent;
     line.textContent = '';
     line.setAttribute('aria-hidden', 'true');
+    line.style.setProperty('--n', [...text].length);
     [...text].forEach((c, i) => {
       const s = document.createElement('span');
       s.className = 'ch';
